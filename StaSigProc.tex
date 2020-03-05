@@ -524,22 +524,28 @@ variables on the basis of observations of outputs of those random variables.
 	Now the conditional pdf $f_{\X|Θ}(x,θ)$ is used to find $θ$ by minimizing the mean MSE instead of uniformly MSE.
 	Mean MSE for $Θ$: $\E\left[\E[(\textit T(\X)-Θ)^2|Θ=θ]\right]$
 
-	\textbf{Conditional Mean Estimator:}\\
-	$\textit T_{\ir CM}: x \mapsto \E[Θ|\X = x] = \int_{Θ} θ \cdot f_{Θ|\X}(θ|x)\diff θ$\\
+	\begin{emphbox}
+		$\textit T_{\ir CM}: x \mapsto \underset{T(x)}{\arg \min} \E[(T(x) - \Theta)^2]$
+	
+		$T_{\ir CM}: x \mapsto \E[Θ|\X = x] = \int_{Θ} θ \cdot f_{Θ|\X}(θ|x)\diff θ$
+	\end{emphbox}
 	Posterior $f_{Θ|\vec {\X}}(θ|\vec x) = \frac{f_{\vec {\X}|Θ}(\vec x) f_{θ}(θ)}{\int_{Θ} f_{\vec {\X},\xi}(\vec x, ξ) \diff ξ } = \frac{f_{\vec {\X}|θ}(\vec x) f_{θ}(θ)}{f_{\X}(x)}$\\[1em]
 	\textbf{Hint:} to calculate $f_{Θ|\vec {\X}}(θ|\vec x)$: Replace every factor not containing $θ$, such as $\frac{1}{f_{\X}(x)}$ with a factor $γ$ and determine $γ$ at the end such that $\int_{Θ} f_{Θ|\vec {\X}}(θ|\vec x) \diff θ = 1$\\
-	MMSE: $\E[\Var[\X|Θ=θ]]$\\
 	\\
-	\textbf{Multivariate Gaussian:} $\X,Θ \sim \mathcal N$ \quad $\Ra σ_{\X}^2 = σ^2_{\X|Θ=θ} + σ_Θ$\\
-	$\T_{\ir CM}: x \mapsto \E[Θ|\X = x] = \vec{μ}_Θ + \ma C_{Θ,\X} \ma C^{−1}_{\X} (\vec x − \vec {μ}_{\X} )$\\
-	MMSE:\\$\E\left[ \norm{\T_{\ir CM} − Θ}^2_2 \right] = \operatorname{tr}(\ma C_{θ|\X}) = \operatorname{tr}(\ma C_{Θ} - \ma C_{Θ,\X} \ma C^{−1}_{\X} \ma C_{\X,Θ})$\\
-	\\
+	\textbf{Jointly Gaussian:} Let $\vec{Z} = [\vec{X}, \vec{\Theta}]^\top \sim \mathcal{N}(\vec{\mu}_Z, \ma{C}_Z)$\\
+	$\ma C_Z = \mat{\ma C_{X} & \ma C_{X\Theta} \\ \ma C_{\Theta X} & \ma C_{\Theta}} \qquad \vec{\mu}_Z = \E\left[\mat{\vec X \\ \vec \Theta}\right] = \mat{\vec{\mu}_X \\ \vec{\mu}_\Theta}$\\
+	\begin{emphbox}
+	$\vec T_{\ir CM}: x \mapsto \E[\vec \Theta|\vec{X} = \vec{x}] = \vec{μ}_Θ + \ma C_{\Theta X} \ma C^{−1}_{\X} (\vec x − \vec {μ}_{\X} )$\\
+	MMSE: $\E\left[ \norm{\vec T_{\ir CM} − \vec \Theta}^2_2 \right] = \operatorname{tr}(\ma C_{\Theta|X}) = \operatorname{tr}(\ma C_{\Theta} - \ma C_{\Theta X} \ma C^{−1}_{\X} \ma C_{X\Theta})$
+	\end{emphbox}
 	\textbf{Orthogonality Principle:}\\
 	$\T_{\ir CM}(\vec{\X}) − Θ \perp h(\vec \X)$ \quad $\Ra$ \quad  $\E[(\textit T_{\ir CM}(\vec{\X}) − Θ)h(\vec{\X})] = 0$
 
 
 	\textbf{MMSE Estimator:} $\hat{θ}_{\ir MMSE} = \underset{θ ∈ Θ}{\arg \min}$ MSE\\
-	minimizes the MSE for all estimators
+	minimizes the MSE for all estimators\\
+	
+	\textbf{Hint:} $\E[\vec{x}^\top \vec{x}] = \E[\operatorname{tr}(\vec{x} \vec{x}^\top)] = \operatorname{tr}(\E[\vec{x} \vec{x}^\top])$
 \end{sectionbox}
 
 
@@ -597,22 +603,24 @@ variables on the basis of observations of outputs of those random variables.
 \begin{sectionbox}
 	\subsection{Linear Minimum Mean Square Estimator (LMMSE)}
 	Estimate $y$ with linear estimator $\vec t$, such that $\hat y = \vec t^\top \vec x + m$ \\
-	Note: the Model does not need to be linear! The estimator is linear!
+	Note: the Model does not need to be linear! The estimator is linear!\\
 	\begin{emphbox}
-		$\{\vec t_{\ir LMMSE}, m_{\ir LMMSE}\} = \underset{\vec t,m}{\arg \min} \E\left[ \norm{\vec y - ( \vec t^\top \vec x+ m)}_2^2 \right]$
+		$\{\vec t_{\ir LMMSE}, m_{\ir LMMSE}\} = \underset{\vec t,m}{\arg \min} \E\left[ \norm{y - ( \vec t^\top \vec x+ m)}_2^2 \right]$
 	\end{emphbox}
-	If Random joint variable $\vec z = \vect{\vec x \\ y}$ with \\ $\vec {μ}_{\vec z} = \vect{\vec{μ}_{\vec x} \\ μ_y}$ and $\ma C_{\vec z} = \mat{\ma C_{\vec x} & \vec c_{\vec xy} \\ c_{y\vec x} & c_y}$ then\\
-	LMMSE Estimation of $y$ given $x$ is\\
-	$\hat y = μ_y+\vec c_{y\vec x} \ma C_{\vec x}^{-1}(\vec x-\vec{μ}_{\vec x}) = \underbrace{\vec c_{y\vec x} \ma C_{\vec x}^{-1}}_{=\vec t^\top}\vec x - \underbrace{μ_y + \vec c_{y\vec x} \ma C_{\vec x}^{-1}\vec{μ}_{\vec x}}_{= m}$\\
-	Minimum MSE: $\E\left[ \norm{\vec y - (\vec x^\top \vec t + m)}_2^2 \right] = c_y - c_{y\vec x} C_{\vec x}^{-1}\vec c_{\vec xy}$\\
-	\\
+	$\hat y = \E[Y] + \frac{\Cov[Y,X]}{\Var[X]}(x - \E[X])$\\
+	\textbf{LMMSE Estimator for Joint RV:}
+	$\vec z = [\vec x, y]^\top$ with \\ $\ma C_{\vec z} = \mat{\ma C_{x} & \ma C_{xy} \\ \ma C_{yx} & \ma C_y} \qquad \vec {μ}_{\vec z} = \mat{\vec{μ}_{x} \\ μ_y}$\\
+	\begin{emphbox}
+			$\hat y = μ_y+\ma C_{yx} \ma C_{x}^{-1}(\vec x-\vec{μ}_{x})
+			= \underbrace{\ma C_{yx} \ma C_{x}^{-1}}_{=\vec t^\top}\vec x - \underbrace{μ_y + \ma C_{yx} \ma C_{x}^{-1}\vec{μ}_{x}}_{= m}$
+	\end{emphbox}
 	\textbf{Hint:} First calculate $\hat y$ in general and then set variables according to system equation.\\
-	\textbf{Multivariate:} $\hat{\vec y} = \ma T_{\ir LMMSE}^\top \vec x$ \qquad $ \ma T_{\ir LMMSE}^\top = \ma C_{\vy \vx} \ma C_{\vx}^{-1}$\\
+	\textbf{Multivariate:} $\hat{\vec y} = \ma T_{\ir LMMSE}^\top \vec x$\\
 	\rule{\columnwidth}{0.5pt}
 	\\
 	If $\vec \mu_{\vec z} = \vec 0$ then\\
-	Estimator $\hat y = \vec c_{y, \vec x} \ma C^{-1}_{\vec x} \vec x$\\
-	Minimum MSE: $\E[c_{y,\vec x}] = c_y - \vec t^\top \vec c_{\vec x,y}$
+	Estimator $\hat y = \ma C_{yx} \ma C^{-1}_{x} \vec x$\\
+	Minimum MSE: $\E[\ma C_{yx}] = c_y - \vec t^\top \ma C_{xy} = \ma C_y - \ma C_{yx} \ma C_{x}^{-1} \ma C_{xy}$
 \end{sectionbox}
 
 
