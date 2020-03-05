@@ -582,9 +582,9 @@ variables on the basis of observations of outputs of those random variables.
 \begin{sectionbox}
 	\subsection{Least Square Estimation (LSE)}
 	Tries to minimize the square error for linear Model: $\hat y_{\ir LS} = \vec x^\top \vec t_{\ir LS}$\\
-	Least Square Error: $\min \left[ \sum\limits_{i=1}^N (y_i - \vec x_i^\top \vec t)^2 \right] = \min\limits_{\vec t} \norm{\vec y - \ma X \vec t}$\\
+	Least Square Error: $\min \left[ \sum\limits_{i=1}^N (y_i - \vec x_i^\top \vec t)^2 \right] = \min\limits_{\vec t} \norm{\vec y - \ma X \vec t}_2^2$\\
 	\begin{emphbox}
-		$\vec t_{\ir LS} = (\ma X^\top \ma X)^{-1} \ma X^\top \vec y$\\
+		$\vec t_{\ir LS} = \underset{\vec t}{\arg \min} \norm{\vec y - \ma X \vec t}_2^2$\\
 	\end{emphbox}
 	$\hat{\vec y}_{\ir LS} = \ma X \vec t_{\ir LS} \in span(X)$
 
@@ -599,7 +599,7 @@ variables on the basis of observations of outputs of those random variables.
 	Estimate $y$ with linear estimator $\vec t$, such that $\hat y = \vec t^\top \vec x + m$ \\
 	Note: the Model does not need to be linear! The estimator is linear!
 	\begin{emphbox}
-		$\hat y_{\ir LMMSE} = \underset{t,m}{\arg \min} \E\left[ \norm{\vec y - ( \vec t^\top \vec x+ m)}_2^2 \right]$
+		$\{\vec t_{\ir LMMSE}, m_{\ir LMMSE}\} = \underset{\vec t,m}{\arg \min} \E\left[ \norm{\vec y - ( \vec t^\top \vec x+ m)}_2^2 \right]$
 	\end{emphbox}
 	If Random joint variable $\vec z = \vect{\vec x \\ y}$ with \\ $\vec {μ}_{\vec z} = \vect{\vec{μ}_{\vec x} \\ μ_y}$ and $\ma C_{\vec z} = \mat{\ma C_{\vec x} & \vec c_{\vec xy} \\ c_{y\vec x} & c_y}$ then\\
 	LMMSE Estimation of $y$ given $x$ is\\
@@ -779,7 +779,7 @@ variables on the basis of observations of outputs of those random variables.
 	\\
 	\textbf{2. step: Update}\\
 	Mean: $\hat{\vec x}_{n|n} = \hat{\vec x}_{n|n-1} + \ma K_n \left( \vec y_n - \ma H_{n} \hat{\vec x}_{n|n-1} \right)$\\
-	Covariance: $\ma C_{\vec x_{n|n}} = \ma C_{\vec x_{n|n-1}} + \ma K_n \ma H_{n} \ma C_{\vec x_{n|n-1}}$\\
+	Covariance: $\ma C_{\vec x_{n|n}} = \ma C_{\vec x_{n|n-1}} - \ma K_n \ma H_{n} \ma C_{\vec x_{n|n-1}}$\\
 
 
 	$\hat{\vec x}_{n|n} = \underbrace{\hat{\vec x}_{n|n-1}}_{\hspace{-3em}{\text{estimation} \E[\X_n|\Y_{n-1} = y_{n-1} ]}} + \overbrace{ \ma K_n \underbrace{ \left( \vec y_n - \ma H_{n} \hat{\vec x}_{n|n-1} \right)}_{\text{innovation:} Δy_n}  }^{\text{correction:}\\ \E[\X_n|Δ\Y_n = Δy_n]}$\\[1em]
@@ -846,52 +846,56 @@ variables on the basis of observations of outputs of those random variables.
 
 
 
+% ======================================================================
+% End
+% ======================================================================
+\end{document}
 
 
-
+\begin{comment}
 % Section
 % ----------------------------------------------------------------------
 \section{Hypothesis Testing}
 making a decision based on the observations
 
 \begin{sectionbox}
-	\subsection{Definition}
+\subsection{Definition}
 
-	Null hypothesis $H_0: θ ∈ Θ_0$ (Assumed first to be true)\\
-	Alternate hypothesis $H_1: θ ∈ Θ_1$ (The one to proof) \\
-	Descision rule $φ: \mathbb X \ra [0, 1]$ with \\
-	$φ(x) = 1$: decide for $H_1$, $φ(x) = 0$: decide for $H_0$
-	Error level $α$ with $\E[d(\X)|θ] \le α, ∀θ∈Θ_0$
+Null hypothesis $H_0: θ ∈ Θ_0$ (Assumed first to be true)\\
+Alternate hypothesis $H_1: θ ∈ Θ_1$ (The one to proof) \\
+Descision rule $φ: \mathbb X \ra [0, 1]$ with \\
+$φ(x) = 1$: decide for $H_1$, $φ(x) = 0$: decide for $H_0$
+Error level $α$ with $\E[d(\X)|θ] \le α, ∀θ∈Θ_0$
 
-	\begin{tablebox}{p{7mm}llp{17mm}}
-		Error Type & ${}_{\text{Decision}}$\!{\large $\diagdown$}\!${}^{\text{Reality}}$ & $H_1$ false {\small ($H_0$ true)} & $H_1$ true {\small ($H_0$ false)}
-		\\ \cmrule
-		1 (FA) False& $H_1$ rejected & \textbf{T}rue \textbf{N}egative & \textbf{F}alse \textbf{N}egative (Type 2)
-		\\
-		Alarm & \small ($H_0$ accepted) & $\P = 1-α$  & $\P = β$
-		\\[1em]
-		2 (DE) & $H_1$ accepted & \textbf{F}alse \textbf{P}ositive (Type 1) & \textbf{T}rue \textbf{P}ositive
-		\\
-		Detection Error & \small($H_0$ rejected) & $\P = α$ & $\P = 1-β$
-	\end{tablebox}
-	Power:
-	Sensitivity/Recall/Hit Rate: $\frac{\text{TP}}{\text{TP}+\text{FN}}=1-β$\\
-	Specificity/True negative rate: $\frac{\text{TN}}{\text{FP}+\text{TN}}=1-α$\\
-	Precision/Positive Prediciton rate: $\frac{\text{TP}}{\text{TP}+\text{FP}}$\\
-	Accuracy: $\frac{\text{TP} + \text{TN}}{\text{P}+\text{N}} = \frac{2-α-β}{2}$
+\begin{tablebox}{p{7mm}llp{17mm}}
+Error Type & ${}_{\text{Decision}}$\!{\large $\diagdown$}\!${}^{\text{Reality}}$ & $H_1$ false {\small ($H_0$ true)} & $H_1$ true {\small ($H_0$ false)}
+\\ \cmrule
+1 (FA) False& $H_1$ rejected & \textbf{T}rue \textbf{N}egative & \textbf{F}alse \textbf{N}egative (Type 2)
+\\
+Alarm & \small ($H_0$ accepted) & $\P = 1-α$  & $\P = β$
+\\[1em]
+2 (DE) & $H_1$ accepted & \textbf{F}alse \textbf{P}ositive (Type 1) & \textbf{T}rue \textbf{P}ositive
+\\
+Detection Error & \small($H_0$ rejected) & $\P = α$ & $\P = 1-β$
+\end{tablebox}
+Power:
+Sensitivity/Recall/Hit Rate: $\frac{\text{TP}}{\text{TP}+\text{FN}}=1-β$\\
+Specificity/True negative rate: $\frac{\text{TN}}{\text{FP}+\text{TN}}=1-α$\\
+Precision/Positive Prediciton rate: $\frac{\text{TP}}{\text{TP}+\text{FP}}$\\
+Accuracy: $\frac{\text{TP} + \text{TN}}{\text{P}+\text{N}} = \frac{2-α-β}{2}$
 
 
-	\subsubsection{Design of a test}
-	Cost criterion $G_{φ}: Θ \ra [0, 1], θ \mapsto \E[d(X)|θ]$\\
-	False Positive lower than $α$: $G_d(θ)|_{θ∈Θ_0} ≤ α, ∀ θ ∈ Θ_0$\\
-	False Negative small as possible: $\max \{G_d(θ)|_{θ∈Θ_1}\}, ∀ θ ∈ Θ_1$
+\subsubsection{Design of a test}
+Cost criterion $G_{φ}: Θ \ra [0, 1], θ \mapsto \E[d(X)|θ]$\\
+False Positive lower than $α$: $G_d(θ)|_{θ∈Θ_0} ≤ α, ∀ θ ∈ Θ_0$\\
+False Negative small as possible: $\max \{G_d(θ)|_{θ∈Θ_1}\}, ∀ θ ∈ Θ_1$
 \end{sectionbox}
 
 
 
 \begin{sectionbox}
-	\subsection{Sufficient Statistics}
-	Sufficiency for a test $T(\X)$ means that no other test statistic, i.e., function of the observations $\vec x$,
+\subsection{Sufficient Statistics}
+Sufficiency for a test $T(\X)$ means that no other test statistic, i.e., function of the observations $\vec x$,
 contains additional information about the parameter $θ$ to be estimated:\\
 $f_{\X|T} (x|T(x) = t, θ) = f_{\X|T}(x|T (x) = t)$
 
@@ -903,55 +907,46 @@ $f_{\X|T} (x|T(x) = t, θ) = f_{\X|T}(x|T (x) = t)$
 \section{Tests}
 
 \begin{sectionbox}
-	\subsection{Neyman-Pearson-Test}
-	The best test of $\P_0$ against $\P_1$ is\\
-	\parbox{15em}{$d_{\ir NP}(x) = \begin{cases} 1 & R(x) > c\\ γ & R(x) = c \\ 0 & R(x) < c \end{cases}$} \quad \parbox{15em}{ Likelihood-Ratio: \\ $R(x) = \frac{f_{\X}(x; θ_1)}{f_{\X}(x; θ_0)}$ }\\
-	$γ = \frac{α - \P_0(\{R > c\})}{\P_0(\{R = c\})}$ \quad Errorlevel $α$\\
-	Steps: For $α$ calculate $x_{α}$, then $c = R(x_{α})$\\
-	\\
-	\includegraphics[width = 0.9\columnwidth]{tests}
+\subsection{Neyman-Pearson-Test}
+The best test of $\P_0$ against $\P_1$ is\\
+\parbox{15em}{$d_{\ir NP}(x) = \begin{cases} 1 & R(x) > c\\ γ & R(x) = c \\ 0 & R(x) < c \end{cases}$} \quad \parbox{15em}{ Likelihood-Ratio: \\ $R(x) = \frac{f_{\X}(x; θ_1)}{f_{\X}(x; θ_0)}$ }\\
+$γ = \frac{α - \P_0(\{R > c\})}{\P_0(\{R = c\})}$ \quad Errorlevel $α$\\
+Steps: For $α$ calculate $x_{α}$, then $c = R(x_{α})$\\
+\\
+\includegraphics[width = 0.9\columnwidth]{tests}
 
-	\textbf{Maximum Likelihood Detector:} \quad
-	$d_{\ir ML}(x) = \begin{cases} 1 & R(x) > 1 \\ 0 & \text{otherwise} \end{cases}$\\
-	\textbf{ROC Graphs:} plot $G_d(θ_1)$ as a function of $G_d(θ_0)$
+\textbf{Maximum Likelihood Detector:} \quad
+$d_{\ir ML}(x) = \begin{cases} 1 & R(x) > 1 \\ 0 & \text{otherwise} \end{cases}$\\
+\textbf{ROC Graphs:} plot $G_d(θ_1)$ as a function of $G_d(θ_0)$
 \end{sectionbox}
 
 
 \begin{sectionbox}
-	\subsection{Bayes Test (MAP Detector)}
-	Prior knowledge on possible hypotheses: $\P(\{θ ∈ Θ_0 \}) + \P(\{θ ∈ Θ_1\}) = 1$, minimizes the probability of a wrong
+\subsection{Bayes Test (MAP Detector)}
+Prior knowledge on possible hypotheses: $\P(\{θ ∈ Θ_0 \}) + \P(\{θ ∈ Θ_1\}) = 1$, minimizes the probability of a wrong
 decision.\\
-	$d_{\ir Bayes} =\! \begin{cases} 1& \!\frac{f_{\X}(x|θ_1)}{f_{\X}(x|θ_0)} > \frac{c_0 \P(θ_0|x)}{c_1 \P(θ_1|x)}\\ 0 & \text{otherwise} \end{cases}$
-	$=\! \begin{cases} 1&\!\! \P(θ_1|x) > \P(θ_0|x) \\ 0 &\!\! \text{otherwise} \end{cases}$
-	Risk weights $c_0,c_1$ are 1 by default.\\
-	If $\P(θ_0) = \P(θ_1)$, the Bayes test is equivalent to the ML test\\
-	\textbf{Loss Function} $L(d(x), θ) = \begin{cases} c_0 & \text{type 1 } d(x) = 1, \text{ but }θ = θ_0 \\ c_1 & \text{type 2 } d(x) = 0, \text{ but }θ = θ_1 \end{cases}$
-	$\operatorname{risk}(d) = \E[L(d(\X), θ)] = \E [\E [L(d(x), θ)|x = \X ]]$\\
-	\textbf{Multiple Hypothesis}
-	$d_{\ir Bayes} = \begin{cases} 0 & x ∈ \mathbb X_0 \\ 1 & x ∈ \mathbb X_1 \\ 2 & x ∈ \mathbb X_2 \end{cases}$
+$d_{\ir Bayes} =\! \begin{cases} 1& \!\frac{f_{\X}(x|θ_1)}{f_{\X}(x|θ_0)} > \frac{c_0 \P(θ_0|x)}{c_1 \P(θ_1|x)}\\ 0 & \text{otherwise} \end{cases}$
+$=\! \begin{cases} 1&\!\! \P(θ_1|x) > \P(θ_0|x) \\ 0 &\!\! \text{otherwise} \end{cases}$
+Risk weights $c_0,c_1$ are 1 by default.\\
+If $\P(θ_0) = \P(θ_1)$, the Bayes test is equivalent to the ML test\\
+\textbf{Loss Function} $L(d(x), θ) = \begin{cases} c_0 & \text{type 1 } d(x) = 1, \text{ but }θ = θ_0 \\ c_1 & \text{type 2 } d(x) = 0, \text{ but }θ = θ_1 \end{cases}$
+$\operatorname{risk}(d) = \E[L(d(\X), θ)] = \E [\E [L(d(x), θ)|x = \X ]]$\\
+\textbf{Multiple Hypothesis}
+$d_{\ir Bayes} = \begin{cases} 0 & x ∈ \mathbb X_0 \\ 1 & x ∈ \mathbb X_1 \\ 2 & x ∈ \mathbb X_2 \end{cases}$
 \end{sectionbox}
 
 
 \begin{sectionbox}
-	\subsection{Linear Alternative Tests}
-	$d: \mathbb X \ra \R, \vec x \mapsto \begin{cases} 1 & \vec w^\top \vec x - w_0 > 0 \\ 0 & \text{otherwise}\end{cases}$\\
-	Estimate normal vector $\vec w^\top$, which separates $\mathbb X$ into $\mathbb X_0$ and $\mathbb X_1$\\
-	$\log R(\vec x) = \frac{\ln(\det(\ma C_0))}{\ln(\det(\ma C_1))} + \frac{1}{2}(\vec x- \vec{μ}_0)^\top\ma C_0^{-1}(\vec x- \vec{μ}_0) -$ \\ $-\frac{1}{2}(\vec x- \vec{μ}_1)^\top\ma C_1^{-1}(\vec x- \vec{μ}_1) = 0$\\
-	\textbf{For 2 Gaussians}, with $\ma C_0 = \ma C_1= \ma C$: $\vec w^\top = (\vec {μ}_1 - \vec{μ}_0)^\top \ma C$\\
-	and constant translation $w_0 = \frac{(\vec {μ}_1 - \vec{μ}_0)^\top \ma C (\vec {μ}_1 - \vec{μ}_0)}{2}$\\
+\subsection{Linear Alternative Tests}
+$d: \mathbb X \ra \R, \vec x \mapsto \begin{cases} 1 & \vec w^\top \vec x - w_0 > 0 \\ 0 & \text{otherwise}\end{cases}$\\
+Estimate normal vector $\vec w^\top$, which separates $\mathbb X$ into $\mathbb X_0$ and $\mathbb X_1$\\
+$\log R(\vec x) = \frac{\ln(\det(\ma C_0))}{\ln(\det(\ma C_1))} + \frac{1}{2}(\vec x- \vec{μ}_0)^\top\ma C_0^{-1}(\vec x- \vec{μ}_0) -$ \\ $-\frac{1}{2}(\vec x- \vec{μ}_1)^\top\ma C_1^{-1}(\vec x- \vec{μ}_1) = 0$\\
+\textbf{For 2 Gaussians}, with $\ma C_0 = \ma C_1= \ma C$: $\vec w^\top = (\vec {μ}_1 - \vec{μ}_0)^\top \ma C$\\
+and constant translation $w_0 = \frac{(\vec {μ}_1 - \vec{μ}_0)^\top \ma C (\vec {μ}_1 - \vec{μ}_0)}{2}$\\
 
 
-	% Bild aus Part7 p 197!!!
-	\includegraphics[width = 0.9\columnwidth]{linest2}
+% Bild aus Part7 p 197!!!
+\includegraphics[width = 0.9\columnwidth]{linest2}
 \end{sectionbox}
 
-
-
-
-
-
-
-% ======================================================================
-% End
-% ======================================================================
-\end{document}
+\end{comment}
