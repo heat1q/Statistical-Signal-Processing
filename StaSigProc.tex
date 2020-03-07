@@ -751,16 +751,34 @@ variables on the basis of observations of outputs of those random variables.
 
 \begin{sectionbox}
 	\subsection{Hidden Markov Chains}
-	Problem: states $\X_i$ are not visible and can only be guessed indirectly as a random variable $\Y_i$.\\
+	Problem: states $\X_n$ are not visible and can only be observed indirectly via $\Y_n$ and the likelihood $f_{\X_n|\Y_n}(y_n, x_n)$.\\
 	\\
 	\includegraphics[width=\textwidth]{hidden_markov}
 
-	Conditional pdf $f_{\VX_n|\VY_n}$ \qquad Likelihood pdf $f_{\Y_n|\X_n}$\\
-	State-transision pdf $f_{\X_n|\X_{n-1}}$\\
+	\textbf{State-transition PDF:} $f_{\X_n|\X_{n-1}}(x_n, x_{n-1})$\\
 	\textbf{Estimation:}
 	\begin{equation*}
 		f_{\VX_n|\VY_n} \propto f_{\VY_n|\VX_n} \cdot \int_{\mathbb X} f_{\VX_n|\VX_{n-1}} \cdot f_{\VX_{n-1}|\VY_{n-1}} \diff \vec x_{n-1}
 	\end{equation*}
+\end{sectionbox}
+
+\begin{sectionbox}
+	\subsection{Gauss-Markov Sequences}
+	$X_{0}  \sim \mathcal{N}\left(0, \sigma_{0}^{2}\right)$ \\
+	$\ldots$  \\
+	$X_{n}  \sim \mathcal{N}\left(\mu_{X_{n} | X_{n-1}=x_{n-1}}, \sigma_{X_{n} | X_{n-1}=x_{n-1}}^{2}\right)$\\
+	Conditional Mean:\\ 
+	\begin{align}
+		\nonumber
+		\mu_{X_n|X_{n-1}} &= \E[X_n|X_{n-1}=x_{n-1}] \\
+		\nonumber
+		&\underset{\mathrm{CM}}= \E[X_n] + \frac{\Cov[X_n,X_{n-1}]}{\Var[X_{n-1}]}(x_{n-1} - \E[X_{n-1}])
+	\end{align}
+	$\sigma^2_{X_n|X_{n-1}} = \E[(X_n - \mu_{X_n|X_{n-1}})^2|X_{n-1}=x_{n-1}]$\\
+	
+	Alternatively: $X_{n}=\rho_{n} X_{n-1}+W_{n} = \mu_{X_n|X_{n-1}} + W_n$\\
+	$\rho_{n}=c_{X_{n}, X_{n-1}} \sigma_{X_{n-1}}^{-2}$ and\\
+	$W_{n} \sim \mathcal{N}\left(0, \sigma_{X_{n} | X_{n-1}=x_{n-1}}^{2}\right)$
 \end{sectionbox}
 
 
@@ -778,8 +796,12 @@ variables on the basis of observations of outputs of those random variables.
 	$\vec y_n = \ma H_n \vec x_{n} + \vec w_n$\\
 	\\
 	With gaussian process/measurement noise $\vec v_n/\vec w_n$\\
-	Short notation: $\E[\vec x_n|\vec y_{n-1}] = \hat {\vec x}_{n|n-1}$ \quad $\E[\vec x_n|\vec y_{n}] = \hat {\vec x}_{n|n}$\\
-	$\E[\vec y_n|\vec y_{n-1}] = \hat {\vec y}_{n|n-1}$ \quad $\E[\vec y_n|\vec y_{n}] = \hat {\vec y}_{n|n}$\\
+	\textbf{Short notations:} \\
+	$\hat {\vec x}_{n|n} = \vec \mu_{X_n|Y_{n}} = \E[\vec X_n|\vec Y_{n} = \vec y_n]$\\
+	$\hat {\vec x}_{n|n-1} = \vec \mu_{X_n|Y_{n-1}} = \E[\vec X_n|\vec Y_{n-1} = \vec y_{n-1}]$\\
+	$\hat {\vec y}_{n|n} = \E[\vec Y_n|\vec Y_{n} = \vec y_n]$\\
+	$\hat {\vec y}_{n|n-1} = \E[\vec Y_n|\vec Y_{n-1} = \vec y_{n-1}]$\\
+	$\ma C_{X_{n | n}}=\mathrm{E}\left[\left(\vec X_{n}-\hat{\vec x}_{n | n}\right)\left(\vec X_{n}-\hat{\vec x}_{n | n}\right)^{\top} | \vec Y_{n}= \vec y_{n}\right]$\\
 	\\
 	\textbf{1. step: Prediction}\\
 	Mean: $\hat {\vec x}_{n|n-1} = \ma G_n \hat{\vec x}_{n-1|n-1}$\\
@@ -854,6 +876,7 @@ variables on the basis of observations of outputs of those random variables.
 
 
 
+
 % ======================================================================
 % End
 % ======================================================================
@@ -861,6 +884,29 @@ variables on the basis of observations of outputs of those random variables.
 
 
 \begin{comment}
+% Section
+% ----------------------------------------------------------------------
+\section{Old Exams}
+\begin{sectionbox}
+\subsection{WS18/19 Problem 5}
+You are given the sequence of random state variables $X_{(n)}=X_{1}, X_{2}, \ldots, X_{n}$ where the current state in the $n$ -th step is a weighted sum according to
+$$
+X_{n}=\sum_{i=1}^{n} g_{n, i} X_{n-i}+V_{n}
+$$
+with the weights $g_{n, i} \in \mathbb{R}$ and the independent random variables $V_{n} \sim \mathcal{N}\left(0, \sigma_{V_{n}}^{2}\right) .$ In addition, it follows that
+$$
+\chi_{0} \sim \mathcal{N}\left(0, \sigma_{\chi_{0}}^{2}\right)
+$$
+\textbf{a}) Show that $\mathrm{E}\left[X_{n}\right]=0$ for every $g_{n, i} \in \mathbb{R}$
+\boxed{$$
+\begin{array}{l}
+\mathrm{E}\left[X_{1}\right]=g_{1,1} \mathrm{E}\left[X_{0}\right]+\mathrm{E}\left[V_{1}\right]=0 \\
+\mathrm{E}\left[X_{2}\right]=g_{2,1} \mathrm{E}\left[X_{1}\right]+g_{2,2} \mathrm{E}\left[X_{0}\right]+\mathrm{E}\left[V_{2}\right]=0
+\end{array}
+$$}
+\end{sectionbox}
+
+
 % Section
 % ----------------------------------------------------------------------
 \section{Hypothesis Testing}
