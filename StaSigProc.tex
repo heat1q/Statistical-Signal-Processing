@@ -846,7 +846,7 @@ variables on the basis of observations of outputs of those random variables.
 
 	\textbf{Non-linear State space:}\\
 	$\vec x_n = g_n(\vec x_{n−1}, \vec v_n)$\\
-	$\vec y_n = h_n(\vec x_{n−1}, \vec w_n)$\\
+	$\vec y_n = h_n(\vec x_{n}, \vec w_n)$\\
 
 
 	\textbf{Posterior Conditional PDF:} $f_{\X_n\!|\!\Y_n}(x_n|y_n) \propto \overbrace{ f_{\Y_n\!|\!\X_n}(y_n|x_n) }^{\text{likelihood}} \cdot$\\
@@ -854,26 +854,24 @@ variables on the basis of observations of outputs of those random variables.
 
 
 	$N$ random Particles with particle weight $w_n^i$ at time $n$\\
-	\textbf{Monte-Carlo-Integration:}
-	$I = \E[g(\X)] \approx I_N = \frac{1}{N} \sum\limits_{i=1}^{N} \tilde g(x^i)$\\
-	\textbf{Importance Sampling:} Instead of $f_{\X}(x)$ use \textbf{Importance Density} $q_{\X}(x)$\\
-	$I_N = \frac{1}{N} \sum\limits_{i=1}^{N} \tilde w^i g(x^i)$ with weights $\tilde w^i = \frac{f_{\X}(x^i)}{q_{\X}(x^i)}$\\
-	If $\int f_{\X_n}(x) \diff x \ne 1$ then $I_N = \sum\limits_{i=1}^{N} w^i g(x^i)$ with $w^i = \frac{\tilde w^i}{\sum\limits_{i=1}^{N} \tilde w^i}$\\
-\end{sectionbox}
-
-\begin{sectionbox}
-	\subsection{Conditional Stochastical Independence}
-	$\P(A \cap B | E) = \P(A | E) \cdot \P(B | E)$\\
 	\\
-	Given $\Y$, $\X$ and $\Z$ are independent if\\
-	$f_{\Z|\Y,\X} (z | y, x) = f_{\Z|\Y}(z|y)$ or\\
-	$f_{\X,\Z|\Y} (x,z|y) = f_{\Z|\Y}(z|y) \cdot f_{\X|\Y}(x|y)$\\
-	$f_{\Z|\X,\Y}(z|x,y) = f_{\Z|\Y}(z|y)$ or $f_{\X|\Z,\Y}(x|z,y) = f_{\X|\Y}(x|y)$
-
-
-
+	\textbf{Monte-Carlo-Integration}\\
+	$I = \E[g(\X)] = \int_{\mathbb{X}} g(x) f_{X}(x) \mathrm{d} x \approx I_N = \frac{1}{N} \sum\limits_{i=1}^{N} \tilde g(x^i)$\\
+	\\
+	\textbf{Importance Sampling}\\
+	Instead of $f_{\X}(x)$ use Importance Density $q_{\X}(x)$\\
+	$I_N = \frac{1}{N} \sum\limits_{i=1}^{N} \tilde w^i g(x^i)$ with weights $\tilde w^i = \frac{f_{\X}(x^i)}{q_{\X}(x^i)}$\\
+	If $\int_{\mathbb{X}} f_{\X_n}(x) \diff x \ne 1$ then $I_N = \sum\limits_{i=1}^{N} w^i g(x^i)$ with $w^i = \frac{\tilde w^i}{\sum\limits_{i=1}^{N} \tilde w^i}$\\
+	$\rightarrow$ Particle Filter: $\hat x_n = \sum_{i=1}^{N} w_n^i x_n^i$\\
+	\\
+	Degeneracy: If $\frac{1}{\sum_{i=1}^{N}\left(w_{n}^{i}\right)^{2}} \leq w_{\text {thr }}$\\
+	\\
+	\textbf{Optimal Importance Density}\\
+	$\tilde{w}_{n}^{\mathrm{opt}, i}=\tilde{w}_{n-1}^{\mathrm{opt}, i} \times f_{\boldsymbol{Y}_{n} | \boldsymbol{X}_{n-1}}\left(\boldsymbol{y}_{n} | \boldsymbol{x}_{n-1}^{i}\right)$\\
+	\\
+	\textbf{Suboptimal Importance Density}\\
+	$\tilde{w}_{n}^{i}=\tilde{w}_{n-1}^{i} \times f_{\boldsymbol{Y}_{n} | \boldsymbol{X}_{n-1}}\left(\boldsymbol{y}_{n} | \boldsymbol{x}_{n}^{i}\right)$\\
 \end{sectionbox}
-
 
 
 
