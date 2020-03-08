@@ -449,6 +449,7 @@ variables on the basis of observations of outputs of those random variables.
 \begin{sectionbox}
 	\subsection{Mean Square Error (MSE)}
 	The MSE is an extension of the Variance $\Var[\T] := \E\left[ (\T − \E[\T])^2 \right]$:\\
+	Unbiased estimator $\rightarrow$ MSE(T) = Var[T]
 	\begin{emphbox}
 		MSE: $ε[\T] = \underset{=\E[(\hat{θ}-θ)^2]}{\E\left[(\T − θ)^2\right]} = \Var(\T) + (\mathrm{Bias}[\T])^2$
 	\end{emphbox}
@@ -511,6 +512,8 @@ variables on the basis of observations of outputs of those random variables.
 	\subsubsection{Exponential Models}
 	If $f_{\X}(x) = \frac{h(x)\exp\big(a(θ)t(x)\big)}{\exp(b(θ))}$ then $I_F(θ) = \frac{∂a(θ)}{∂θ} \frac{∂ E[t(\X)]}{∂ θ}$\\
 	\\
+	If $t(X)$ is unbiased then $I_F(θ) = \frac{∂a(θ)}{∂θ}$ since $\frac{∂ E[t(\X)]}{∂ θ} = 1$\\
+	\\
 	\textbf{Some Derivations:} (check in exam)\\
 	Uniformly: Not diffable $\Ra$ no $I_F(θ)$\\
 	Normal $\mathcal N(θ,σ^2)$: $g(x,θ) = \frac{(x-θ)}{σ^2}$ \quad $I_{\ir F}(θ) = \frac{1}{σ^2}$\\
@@ -564,21 +567,23 @@ variables on the basis of observations of outputs of those random variables.
 	\subsection{Previous Exam Examples:}
 	X and Y independant: $f_{XY}(x,y;\theta) = f_X(x;\theta)f_Y(y;\theta)$\\
 	Log-likelihood function: $l(\theta;x,y) = log \prod\limits_{i=1}^N f_{XY}(x_i,y_i;\theta)$\\
-	$= \sum\limits_{i=1}^N log(f_{XY}(x_i,y_i;\theta))$\\
+	$= \sum\limits_{i=1}^N log(f_{XY}(x_i,y_i;\theta)) = ...$\\
 	Score function: $ g(\vec{x},\vec{y},\theta) =  \frac{\partial}{\partial θ} l(\theta;\vec{x},\vec{y})$\\
 	\\
 	State the maximum likelihood (ML) optimization problem for the estimation of $\theta$ based on the joint PDF $f_{\vec{X},\vec{Y}}(\vec{x},\vec{y};\theta)$:\\
 	\\
-	$\hat{\theta}_{ML} = \underset{θ ∈ Θ}{\argmax} \{ f_{\vec{X},\vec{Y}}(\vec{x},\vec{y};\theta) \} $\\
+	$\hat{\theta}_{\ir ML} = \underset{θ ∈ Θ}{\argmax} \{ f_{\vec{X},\vec{Y}}(\vec{x},\vec{y};\theta) \} $\\
 	\\
-	Express the maximum likelihood (ML) estimator $\hat{\theta}_{ML}$ for $\theta$ in terms of k and d(x, y).
+	Express the maximum likelihood (ML) estimator $\hat{\theta}_{\ir ML}$ for $\theta$ in terms of k and d(x, y).
 	\textbf{Hint}: You may assume that a stationary point is a maximizer:\\
 	\\
-	$ g(\vec{x},\vec{y},\theta) \Big\rvert_{ \theta = \hat{\theta}_{ML} } = 0 $\\
+	$ g(\vec{x},\vec{y},\theta) \Big\rvert_{ \theta = \hat{\theta}_{\ir ML} } = 0 \leftrightarrow ... $\\
 	\\
 	Use the score function $ g(\vec{x},\vec{y},\theta)$ in order to compute a non-trivial lower bound on the 			variance of any unbiased estimator for $\theta$ based on the samples $(\vec{X},\vec{Y})$. \textbf{Justify your answer!}\\
 	\\
 	$ I_{\ir F}(θ) = \Var[g(\vec{x},\vec{y};\theta)] = ... $\\
+	\\
+	$\rightarrow$ with independant X and Y: $\Var[aX + bY] = a^2\Var[X] + b^2\Var[Y]$\\
 	\\
 	The lower bound is the Cramer-Rao Bound given as:\\
 	\\
@@ -589,6 +594,11 @@ variables on the basis of observations of outputs of those random variables.
 	Estimator is UMVUE, if unbiased and achieves Cramer-Rao Bound:\\
 	\\
     $ \E[\hat{\theta}] = \theta $ and $ \Var[\hat{\theta}] = \frac{1}{I_{\ir F}(θ)}$\\
+    \\
+    It can be shown that an unbiased estimator with asymptotically vanishing variance is consistent. Using above fact, show that $\hat{\mu}_{\ir ML}$ is consistent:\\
+    $\Var[\hat{\mu}_{\ir ML}] = \Var[\frac{1}{N} \sum\limits_{i=1}^N X_i] = \frac{1}{N^2} \Var[ \sum\limits_{i=1}^N X_i] = \frac{1}{N^2} \sum\limits_{i=1}^N \Var[X_i] = \frac{1}{N} \sigma^2 $\\
+    \\
+    As $ \lim_{N \rightarrow \infty} \Var[\hat{\mu}_{\ir ML}] = 0$, the estimator $\hat{\mu}_{\ir ML}$ is consistent.
 	
 \end{sectionbox}
 
