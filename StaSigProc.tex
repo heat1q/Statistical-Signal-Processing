@@ -560,6 +560,38 @@ variables on the basis of observations of outputs of those random variables.
 	Large $N \Ra$ ML better, small $N \Ra $ CM better\\
 \end{sectionbox}
 
+\begin{sectionbox}
+	\subsection{Previous Exam Examples:}
+	X and Y independant: $f_{XY}(x,y;\theta) = f_X(x;\theta)f_Y(y;\theta)$\\
+	Log-likelihood function: $l(\theta;x,y) = log \prod\limits_{i=1}^N f_{XY}(x_i,y_i;\theta)$\\
+	$= \sum\limits_{i=1}^N log(f_{XY}(x_i,y_i;\theta))$\\
+	Score function: $ g(\vec{x},\vec{y},\theta) =  \frac{\partial}{\partial θ} l(\theta;\vec{x},\vec{y})$\\
+	\\
+	State the maximum likelihood (ML) optimization problem for the estimation of $\theta$ based on the joint PDF $f_{\vec{X},\vec{Y}}(\vec{x},\vec{y};\theta)$:\\
+	\\
+	$\hat{\theta}_{ML} = \underset{θ ∈ Θ}{\argmax} \{ f_{\vec{X},\vec{Y}}(\vec{x},\vec{y};\theta) \} $\\
+	\\
+	Express the maximum likelihood (ML) estimator $\hat{\theta}_{ML}$ for $\theta$ in terms of k and d(x, y).
+	\textbf{Hint}: You may assume that a stationary point is a maximizer:\\
+	\\
+	$ g(\vec{x},\vec{y},\theta) \Big\rvert_{ \theta = \hat{\theta}_{ML} } = 0 $\\
+	\\
+	Use the score function $ g(\vec{x},\vec{y},\theta)$ in order to compute a non-trivial lower bound on the 			variance of any unbiased estimator for $\theta$ based on the samples $(\vec{X},\vec{Y})$. \textbf{Justify your answer!}\\
+	\\
+	$ I_{\ir F}(θ) = \Var[g(\vec{x},\vec{y};\theta)] = ... $\\
+	\\
+	The lower bound is the Cramer-Rao Bound given as:\\
+	\\
+	$ \Var[\hat{\theta}] \ge \frac{1}{I_{\ir F}(θ)} = ... $\\
+	\\
+	Estimator is unbiased, if: $ \E[\hat{\theta}] = ... = \theta $\\
+	\\
+	Estimator is UMVUE, if unbiased and achieves Cramer-Rao Bound:\\
+	\\
+    $ \E[\hat{\theta}] = \theta $ and $ \Var[\hat{\theta}] = \frac{1}{I_{\ir F}(θ)}$\\
+	
+\end{sectionbox}
+
 
 
 \columnbreak
