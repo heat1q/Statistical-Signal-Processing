@@ -439,10 +439,8 @@ variables on the basis of observations of outputs of those random variables.
 \begin{sectionbox}
 	\subsection{Quality Properties of Estimators}
 	Consistent: If $\lim\limits_{N \ra ∞} \T(x_1, \ldots, x_N) = θ$\\
-	Or $\lim\limits_{N \ra ∞} \Var[\T] = 0$\\
 	Bias $\Bias(\T) := \E [\T(\X_1, \ldots, \X_N)] - θ$ \\
-	Unbiased: If $\E [\T(\X_1, \ldots, \X_N)]=\theta$\\
-	(biased estimators can provide better estimates than unbiased estimators.)\\
+	unbiased if $\Bias(\T)=0$ (biased estimators can provide better estimates than unbiased estimators.)\\
 	Variance $\Var[\T] := \E\left[ (\T − \E[\T])^2 \right]$
 \end{sectionbox}
 
@@ -530,7 +528,7 @@ variables on the basis of observations of outputs of those random variables.
 	Mean MSE for $Θ$: $\E\left[\E[(\textit T(\X)-Θ)^2|Θ=θ]\right]$
 
 	\begin{emphbox}
-		$\textit T_{\ir CM}: x \mapsto \underset{T(X)}{\arg \min} \E[(T(X) - \Theta)^2]$
+		$\textit T_{\ir CM}: x \mapsto \underset{T(x)}{\arg \min} \E[(T(x) - \Theta)^2]$
 	
 		$T_{\ir CM}: x \mapsto \E[Θ|\X = x] = \int_{Θ} θ \cdot f_{Θ|\X}(θ|x)\diff θ$
 	\end{emphbox}
@@ -665,9 +663,7 @@ ments of the random variables.\\
 	\begin{emphbox}
 		$\{\vec t_{\ir LMMSE}, m_{\ir LMMSE}\} = \underset{\vec t,m}{\arg \min} \E\left[ \norm{y - ( \vec t^\top \vec x+ m)}_2^2 \right]$
 	\end{emphbox}
-	\begin{emphbox}
 	$\hat y = \E[Y] + \frac{\Cov[Y,X]}{\Var[X]}(x - \E[X])$\\
-	\end{emphbox}
 	\textbf{LMMSE Estimator for Joint RV:}
 	$\vec z = [\vec x, y]^\top$ with \\ $\ma C_{\vec z} = \mat{\ma C_{x} & \ma C_{xy} \\ \ma C_{yx} & \ma C_y} \qquad \vec {μ}_{\vec z} = \mat{\vec{μ}_{x} \\ μ_y}$\\
 	\begin{emphbox}
@@ -934,17 +930,6 @@ ments of the random variables.\\
 	$\tilde{w}_{n}^{i}=\tilde{w}_{n-1}^{i} \times f_{\boldsymbol{Y}_{n} | \boldsymbol{X}_{n-1}}\left(\boldsymbol{y}_{n} | \boldsymbol{x}_{n}^{i}\right)$\\
 \end{sectionbox}
 
-
-
-% ======================================================================
-% End
-% ======================================================================
-\end{document}
-
-
-\begin{comment}
-% Section
-% ----------------------------------------------------------------------
 \section{Old Exams}
 \begin{sectionbox}
 \subsection{WS18/19 Problem 5}
@@ -965,6 +950,14 @@ $$
 $$}
 \end{sectionbox}
 
+
+% ======================================================================
+% End
+% ======================================================================
+\end{document}
+
+
+\begin{comment}
 
 % Section
 % ----------------------------------------------------------------------
