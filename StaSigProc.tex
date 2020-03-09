@@ -598,7 +598,21 @@ variables on the basis of observations of outputs of those random variables.
     It can be shown that an unbiased estimator with asymptotically vanishing variance is consistent. Using above fact, show that $\hat{\mu}_{\ir ML}$ is consistent:\\
     $\Var[\hat{\mu}_{\ir ML}] = \Var[\frac{1}{N} \sum\limits_{i=1}^N X_i] = \frac{1}{N^2} \Var[ \sum\limits_{i=1}^N X_i] = \frac{1}{N^2} \sum\limits_{i=1}^N \Var[X_i] = \frac{1}{N} \sigma^2 $\\
     \\
-    As $ \lim_{N \rightarrow \infty} \Var[\hat{\mu}_{\ir ML}] = 0$, the estimator $\hat{\mu}_{\ir ML}$ is consistent.
+    As $ \lim_{N \rightarrow \infty} \Var[\hat{\mu}_{\ir ML}] = 0$, the estimator $\hat{\mu}_{\ir ML}$ is consistent.\\
+    \\
+    State the posterior distribution $f_{Θ|X}(θ|X=x)$ using only $f_{X|θ}(x|Θ=θ) f_{Θ}(θ)$ and $f_{Θ}(θ)$:\\
+    $ f_{Θ|X}(θ|X=x) = \frac{f_{X|θ}(x|Θ=θ) f_{Θ}(θ)}{f_{X}(x)} = \frac{f_{X|θ}(x|Θ=θ) f_{Θ}(θ)} {\int \limits_{-\infty}^\infty f_{X|θ}(x|Θ=θ) f_{Θ}(θ) \diff θ} $\\
+    What is the conceptual difference between a minimum mean square error (MMSE) and a
+linear MMSE (LMMSE) estimation? \\
+	Both, MMSE and LMMSE estimators, use the same optimality critereon,
+but the LMMSE is restricted to linear (affine) estimators.\\
+What is the knowledge required for computing the LMMSE estimate compared to the 2
+MMSE estimate?\\
+The MMSE estimator requires the full knowledge about the distributions
+describing the observed and unknown random variables.
+The LMMSE estimator uses only the first and second order statistical mo-
+ments of the random variables.\\
+    
 	
 \end{sectionbox}
 
